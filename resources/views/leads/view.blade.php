@@ -77,7 +77,7 @@
                                 </tbody>
                             </table>
                         @else
-                            <p>Invalid or empty JSON object.</p>
+                            <p>Invalid or empty Quote List..</p>
                         @endif
                     </div>
                 </div>
