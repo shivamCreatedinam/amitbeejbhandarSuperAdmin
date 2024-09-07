@@ -43,7 +43,7 @@
                             $isJsonValid = json_last_error() === JSON_ERROR_NONE;
                         @endphp
 
-                        @if ($isJsonValid && !empty($quotes))
+                        @if ($isJsonValid && is_array($quotes) && !empty($quotes))
                             <table class="table table-hover table-striped table-bordered">
                                 <thead>
                                     <tr>
