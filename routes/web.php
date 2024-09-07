@@ -39,6 +39,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth:web'], function () {
         Route::get('/lead-list', [LeadController::class, "index"])->name("admin_lead_list");
         Route::get('/quotes-list/{id}', [LeadController::class, "quotesList"])->name("admin_quotes_list");
         Route::post('/send-mail', [LeadController::class, "sendMail"])->name("admin_mail_send");
+        Route::get('/delete-lead/{id}', [LeadController::class, "deleteLead"])->name("admin_delete_lead");
     });
 
     Route::get("settings", [SettingController::class, "index"])->name("admin_setting");

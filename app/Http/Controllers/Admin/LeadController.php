@@ -42,7 +42,10 @@ class LeadController extends Controller
             foreach ($leads as $key => $lead) {
 
                 $view_quotes = "<a href='" . route('admin_quotes_list', ['id' => $lead->id]) . "' class='btn btn-success btn-sm'>View Quotes</a>";
-                $email = "<a href='#' class='btn btn-primary btn-sm sendMailBtn' data-email='" . $lead->email . "' data-qid='" . $lead->id . "'>Send Mail</a>";
+                $actions = "<a href='#' class='btn btn-primary btn-sm sendMailBtn' data-email='" . $lead->email . "' data-qid='" . $lead->id . "'>Send Mail</a>";
+
+                $actions .= "&nbsp; &nbsp;<a href='" . route('admin_delete_lead', ['id' => $lead->id]) . "' class='btn btn-danger mt-1 btn-sm' onclick='return confirm(\"Are you sure you want to delete this lead?\")' title='Delete Lead'><i class='fa fa-trash'></i></a>";
+
 
                 // fetch trade status
                 $return[] = [
@@ -53,7 +56,7 @@ class LeadController extends Controller
                     'quotes' => $view_quotes,
                     'gst_number' => $lead->gst_number,
                     'remarks' => $lead->remarks,
-                    'actions' => $email,
+                    'actions' => $actions,
                 ];
             }
             return response()->json([
@@ -119,6 +122,16 @@ class LeadController extends Controller
             }
         } else {
             return redirect()->back()->with('error', "Please Set From Mail & From Name using setting.");
+        }
+    }
+
+    public function deleteLead($id)
+    {
+        try {
+            Lead::find($id)->delete();
+            return redirect()->back()->with('success', 'Lead successfully delete!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to delete: ' . $e->getMessage());
         }
     }
 }
