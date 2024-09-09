@@ -9,8 +9,8 @@
                     <h6 class="op-7 mb-2">Welcome {{ auth()->user()->name }}</h6>
                 </div>
                 <div class="ms-md-auto py-2 py-md-0">
-                    <a href="{{ route('admin_user_list') }}" class="btn btn-label-info btn-round me-2">Manage User</a>
-                    <a href="#" class="btn btn-primary btn-round">Add User</a>
+                    <a href="{{ route('admin_lead_list') }}" class="btn btn-label-info btn-round me-2">Manage Leads</a>
+                    {{-- <a href="#" class="btn btn-primary btn-round">Add User</a> --}}
                 </div>
             </div>
             <div class="row">
@@ -20,13 +20,13 @@
                             <div class="row align-items-center">
                                 <div class="col-icon">
                                     <div class="icon-big text-center icon-primary bubble-shadow-small">
-                                        <i class="fas fa-users"></i>
+                                        <i class="fas fa-shopping-cart"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Visitors</p>
-                                        <h4 class="card-title">1,294</h4>
+                                        <p class="card-category">Total Orders</p>
+                                        <h4 class="card-title">{{ $total_orders }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -39,13 +39,32 @@
                             <div class="row align-items-center">
                                 <div class="col-icon">
                                     <div class="icon-big text-center icon-info bubble-shadow-small">
-                                        <i class="fas fa-user-check"></i>
+                                        <i class="fas fa-cart-arrow-down"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Subscribers</p>
-                                        <h4 class="card-title">1303</h4>
+                                        <p class="card-category">Total Pending Orders</p>
+                                        <h4 class="card-title">{{ $total_pending_orders }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-danger bubble-shadow-small">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Total Cancel Orders</p>
+                                        <h4 class="card-title">{{ $total_cancelled_orders }}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -58,37 +77,51 @@
                             <div class="row align-items-center">
                                 <div class="col-icon">
                                     <div class="icon-big text-center icon-success bubble-shadow-small">
-                                        <i class="fas fa-luggage-cart"></i>
+                                        <i class="far fa-check-circle"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Sales</p>
-                                        <h4 class="card-title">$ 1,345</h4>
+                                        <p class="card-category">Total Accept Orders</p>
+                                        <h4 class="card-title">{{ $total_accept_orders }}</h4>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="card card-stats card-round">
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="text-muted card-title">Top Selling Products</h5>
+                        </div>
                         <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col-icon">
-                                    <div class="icon-big text-center icon-secondary bubble-shadow-small">
-                                        <i class="far fa-check-circle"></i>
-                                    </div>
-                                </div>
-                                <div class="col col-stats ms-3 ms-sm-0">
-                                    <div class="numbers">
-                                        <p class="card-category">Order</p>
-                                        <h4 class="card-title">576</h4>
-                                    </div>
-                                </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-borderded table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Product Name</th>
+                                            <th>Category</th>
+                                            <th>Brand</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Biopearl</td>
+                                            <td>Natural Seaweed Extract</td>
+                                            <td>ATUL LIMITED</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
             {{-- <div class="row">

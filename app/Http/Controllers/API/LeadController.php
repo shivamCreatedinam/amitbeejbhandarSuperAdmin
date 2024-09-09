@@ -49,6 +49,7 @@ class LeadController extends Controller
      *             @OA\Property(property="mobile", type="string", example="9876543210"),
      *             @OA\Property(property="quotes", type="string", example="['Sample Quote 1', 'Sample Quote 2']"),
      *             @OA\Property(property="gst_number", type="string", nullable=true, example="22AAAAA0000A1Z5"),
+     *  *             @OA\Property(property="pan_number", type="string", nullable=true, example="ABCDE1234F"),
      *             @OA\Property(property="remarks", type="string", nullable=true, example="Customer prefers evening calls"),
      *         )
      *     ),
@@ -79,6 +80,7 @@ class LeadController extends Controller
             'mobile' => 'required|min:10|max:10',
             'quotes' => 'nullable',
             'gst_number' => 'nullable',
+            'pan_number' => 'nullable',
             'remarks' => 'nullable',
         ]);
 
@@ -95,6 +97,7 @@ class LeadController extends Controller
                 "mobile" => $request->mobile,
                 "quotes" => json_encode($request->quotes, true),
                 "gst_number" => $request->gst_number,
+                "pan_number" => $request->pan_number,
                 "remarks" => $request->remarks,
             ]);
             DB::commit();

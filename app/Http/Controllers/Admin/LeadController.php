@@ -26,7 +26,7 @@ class LeadController extends Controller
             $dir = $request->order[0]['dir'];
             // $column = $request->columns[$order]['data'];
 
-            $leads = Lead::query()->orderBy('created_at', $dir);
+            $leads = Lead::query()->orderBy('created_at', "desc");
 
             if ($search) {
                 $leads->where(function ($q) use ($search) {
@@ -34,6 +34,8 @@ class LeadController extends Controller
                     $q->orWhere('email', 'like', '%' . $search . '%');
                     $q->orWhere('mobile', 'like', '%' . $search . '%');
                     $q->orWhere('gst_number', 'like', '%' . $search . '%');
+                    $q->orWhere('order_status', 'like', '%' . $search . '%');
+                    $q->orWhere('pan_number', 'like', '%' . $search . '%');
                 });
             }
             $total = $leads->count();
@@ -42,10 +44,18 @@ class LeadController extends Controller
             foreach ($leads as $key => $lead) {
 
                 $view_quotes = "<a href='" . route('admin_quotes_list', ['id' => $lead->id]) . "' class='btn btn-success btn-sm'>View Quotes</a>";
-                $actions = "<a href='#' class='btn btn-primary btn-sm sendMailBtn' data-email='" . $lead->email . "' data-qid='" . $lead->id . "'>Send Mail</a>";
 
-                $actions .= "&nbsp; &nbsp;<a href='" . route('admin_delete_lead', ['id' => $lead->id]) . "' class='btn btn-danger mt-1 btn-sm' onclick='return confirm(\"Are you sure you want to delete this lead?\")' title='Delete Lead'><i class='fa fa-trash'></i></a>";
+                $change_order_status = "<a href='javascript:void(0)' class='btn btn-secondary btn-sm changeCurrentStatus' data-qid='" . $lead->id . "'>Change Order Status</a>";
 
+                $actions = "<a href='#' class='btn btn-primary btn-sm sendMailBtn' data-email='" . $lead->email . "' data-qid='" . $lead->id . "' title='Send Mail'><i class='fa fa-paper-plane'></i></a>";
+
+                $actions .= "&nbsp;<a href='" . route('admin_delete_lead', ['id' => $lead->id]) . "' class='btn btn-danger mt-1 btn-sm' onclick='return confirm(\"Are you sure you want to delete this lead?\")' title='Delete Lead'><i class='fa fa-trash'></i></a>";
+
+                $current_order_status = $lead->order_status == "pending"
+                    ? "<span class='badge badge-primary'>Pending</span>"
+                    : ($lead->order_status == "accept"
+                        ? "<span class='badge badge-success'>Accepted</span>"
+                        : "<span class='badge badge-danger'>Cancelled</span>");
 
                 // fetch trade status
                 $return[] = [
@@ -54,8 +64,10 @@ class LeadController extends Controller
                     'email' => $lead->email,
                     'mobile' => $lead->mobile,
                     'quotes' => $view_quotes,
-                    'gst_number' => $lead->gst_number,
+                    'gst_number' => $lead->gst_number ?? $lead->pan_number ?? '-',
                     'remarks' => $lead->remarks,
+                    'order_status' => $current_order_status,
+                    'change_order_status' => $change_order_status,
                     'actions' => $actions,
                 ];
             }
@@ -76,6 +88,38 @@ class LeadController extends Controller
             return view('leads.view', $data);
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function getOrder(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            "qid" => "required",
+        ]);
+        try {
+            $lead = Lead::find($request->qid);
+            return response()->json(['status' => true, 'message' => "Order Successfully Fetched.", 'data' => $lead, "status_code" => 200]);
+        } catch (Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage(), 'data' => null, "status_code" => 500]);
+        }
+    }
+
+    public function changeOrderStatus(Request $request)
+    {
+        try {
+            $request->validate([
+                "oid" => "required",
+                "order_status" => "required|in:pending,accept,cancel",
+                "cancellation_reason" => "required_if:order_status,cancel"
+            ]);
+            Lead::find($request->oid)->update([
+                "order_status" => strtolower($request->order_status),
+                "cancellation_reason" => $request->order_status == "cancel" ? $request->cancellation_reason : NULL,
+            ]);
+            return redirect()->back()->with("success", "Order Status successfully updated.");
+        } catch (Exception $e) {
+            return redirect()->back()->with("error", $e->getMessage());
         }
     }
 
