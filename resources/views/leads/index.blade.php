@@ -26,10 +26,9 @@
         <div class="card mx-4">
             <div class="card-header">
                 @include('status')
+                <h4 class="card-title">Leads List</h4>
             </div>
             <div class="card-body">
-                <h4 class="card-title">Leads List</h4>
-
                 {{-- <input type="checkbox" checked data-toggle="toggle" data-width="100" data-height="75" data-onlabel="Active" data-offlabel="Block" data-onstyle="success" data-offstyle="danger"> --}}
 
 

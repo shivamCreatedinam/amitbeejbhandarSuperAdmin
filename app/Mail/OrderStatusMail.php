@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OrderCreateMail extends Mailable
+class OrderStatusMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -24,23 +24,23 @@ class OrderCreateMail extends Mailable
         $this->from_mail = $from_mail;
     }
 
+
     public function build()
     {
-        $email = $this->view('emails.new-order')
+        $email = $this->view('emails.order-status')
             ->with([
                 'id' => $this->order->id,
                 'name' => $this->order->name,
-                'email' => $this->order->email,
-                'mobile' => $this->order->mobile,
+                'order_status' => $this->order->order_status,
                 'order_date' => \Carbon\Carbon::parse($this->order->created_at)->format('d M Y h:i A'),
                 'company_name' => $this->from_mail->website_name,
                 'company_email' => $this->from_mail->from_mail_address,
-                'items' => json_decode($this->order->quotes, true),
+                'cancellation_reason' => $this->order->cancellation_reason
             ]);
 
 
 
         // Set the "From" address and name
-        return $email->from($this->from_mail->from_mail_address, $this->from_mail->from_mail_name)->subject($this->from_mail->website_name . " - New Order Received.");;
+        return $email->from($this->from_mail->from_mail_address, $this->from_mail->from_mail_name)->subject($this->from_mail->website_name . " - your recent order update..");;
     }
 }

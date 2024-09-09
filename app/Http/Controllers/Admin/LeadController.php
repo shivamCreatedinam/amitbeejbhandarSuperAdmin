@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\OrderStatusEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\SendQuoteMail;
 use App\Models\Lead;
@@ -117,6 +118,11 @@ class LeadController extends Controller
                 "order_status" => strtolower($request->order_status),
                 "cancellation_reason" => $request->order_status == "cancel" ? $request->cancellation_reason : NULL,
             ]);
+
+            $lead = Lead::find($request->oid);
+            $setting_mail = Setting::query()->first();
+            event(new OrderStatusEvent($lead, $setting_mail));
+
             return redirect()->back()->with("success", "Order Status successfully updated.");
         } catch (Exception $e) {
             return redirect()->back()->with("error", $e->getMessage());
