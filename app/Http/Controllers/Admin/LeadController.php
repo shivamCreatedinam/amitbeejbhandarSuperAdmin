@@ -23,10 +23,10 @@ class LeadController extends Controller
             $skip = ($pageNumber - 1) * $pageLength;
             $search = $request->search['value'];
             // $order = $request->order[0]['column'];
-            $dir = $request->order[0]['dir'];
+            $dir = $request->order[0]['dir'] ?? "desc";
             // $column = $request->columns[$order]['data'];
 
-            $leads = Lead::query()->orderBy('created_at', "desc");
+            $leads = Lead::query()->orderBy('created_at', $dir);
 
             if ($search) {
                 $leads->where(function ($q) use ($search) {

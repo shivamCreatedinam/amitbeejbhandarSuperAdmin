@@ -190,7 +190,9 @@
                     },
                     {
                         data: 'change_order_status',
-                        name: 'change_order_status'
+                        name: 'change_order_status',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'actions',
@@ -199,9 +201,9 @@
                         searchable: false
                     },
                 ],
-                // order: [
-                //     [0, 'desc']
-                // ],
+                order: [
+                    [0, 'desc']
+                ],
                 pageLength: 10,
                 lengthMenu: [10, 25, 50, 100],
                 createdRow: function(row, data, dataIndex) {

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\OrderCreateEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponseTrait;
 use Exception;
@@ -34,6 +36,7 @@ class LeadController extends Controller
      *                 @OA\Property(property="mobile", type="string", example="9876543210", description="10-digit mobile number"),
      * @OA\Property(property="quotes", type="string", example="send array", description="optional array of quotes"),
      *                 @OA\Property(property="gst_number", type="string", nullable=true, example="22AAAAA0000A1Z5"),
+     *    *                 @OA\Property(property="pan_number", type="string", nullable=true, example="ABCDE1234F"),
      *                 @OA\Property(property="remarks", type="string", nullable=true, example="Customer prefers evening calls"),
      *             )
      *         )
@@ -100,6 +103,8 @@ class LeadController extends Controller
                 "pan_number" => $request->pan_number,
                 "remarks" => $request->remarks,
             ]);
+            $setting_mail = Setting::query()->first();
+            event(new OrderCreateEvent($lead, $setting_mail));
             DB::commit();
             return $this->successResponse($lead, "Leads successfully created.");
         } catch (Exception $e) {
