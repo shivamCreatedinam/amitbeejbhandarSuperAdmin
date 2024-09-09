@@ -11,7 +11,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #dadada;
         }
 
         table {
@@ -66,7 +66,7 @@
 
         .footer {
             background-color: #4CAF50;
-            color: white;
+            color: white !important;
             padding: 10px;
             text-align: center;
             font-size: 14px;
