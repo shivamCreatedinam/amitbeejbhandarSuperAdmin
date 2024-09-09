@@ -32,7 +32,7 @@ class OrderCreateMail extends Mailable
                 'name' => $this->order->name,
                 'email' => $this->order->email,
                 'mobile' => $this->order->mobile,
-                'order_date' => date("d M Y H:i A", strtotime($this->order->created_at)),
+                'order_date' => \Carbon\Carbon::parse($this->order->created_at)->format('d M Y H:i A'),
                 'company_name' => $this->from_mail->website_name,
                 'company_email' => $this->from_mail->from_mail_address,
                 'items' => json_decode($this->order->quotes, true),

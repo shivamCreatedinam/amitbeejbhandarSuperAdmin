@@ -83,10 +83,10 @@
                 <p>Thank you for your order! Your order has been placed successfully.</p>
 
                 <div class="order-details">
-                    <p><strong>Order Number:</strong> {{ '#' . $id }}</p>
+                    <p><strong>Order Number:</strong> {{ "#".$id }}</p>
                     <p><strong>Order Date:</strong> {{ $order_date }}</p>
-                    <p><strong>Your Email:</strong> ${{ $email }}</p>
-                    <p><strong>Your Mobile:</strong> ${{ $mobile }}</p>
+                    <p><strong>Your Email:</strong> {{ $email }}</p>
+                    <p><strong>Your Mobile:</strong> {{ $mobile }}</p>
                 </div>
 
                 <h2>Order Summary</h2>
@@ -102,12 +102,16 @@
                     <tbody>
                         @if (!empty($items))
                             @foreach ($items as $item)
-                                <tr>
-                                    <td>{{ $item['Product Name'] }}</td>
-                                    <td>{{ $item['Brand'] }}</td>
-                                    <td>{{ $quote['quantity'] }}</td>
-                                    <td>{{ $quote['Price'] ?? 'N/A' }}</td>
-                                </tr>
+                                @if (is_array($item))
+                                    <tr>
+                                        <td>{{ $item['Product Name'] }}</td>
+                                        <td>{{ $item['Brand'] }}</td>
+                                        <td>{{ $item['quantity'] }}</td>
+                                        <td>{{ $item['Price'] ?? 'N/A' }}</td>
+                                    </tr>
+                                @else
+                                    <li>Invalid item format</li>
+                                @endif
                             @endforeach
                         @endif
 
