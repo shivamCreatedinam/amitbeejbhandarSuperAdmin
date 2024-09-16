@@ -104,10 +104,10 @@
                             @foreach ($items as $item)
                                 @if (is_array($item))
                                     <tr>
-                                        <td>{{ $item['product_name'] ?? '-' }}</td>
-                                        <td>{{ $item['brand'] ?? '-' }}</td>
-                                        <td>{{ $item['quantity'] ?? '-' }}</td>
-                                        <td>{{ $item['selling_price'] ?? 'N/A' }}</td>
+                                        <td>{{ $item->product_name ?? '-' }}</td>
+                                        <td>{{ $item->brand ?? '-' }}</td>
+                                        <td>{{ $item->quantity ?? '-' }}</td>
+                                        <td>{{ $item->selling_price ?? 'N/A' }}</td>
                                     </tr>
                                 @else
                                     <li>Invalid item format</li>

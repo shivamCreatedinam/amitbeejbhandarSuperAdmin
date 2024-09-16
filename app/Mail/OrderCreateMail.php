@@ -39,7 +39,7 @@ class OrderCreateMail extends Mailable
                 'items' => json_decode($this->order->quotes, true),
             ]);
 
-Log::channel("lead")->info("Lead : ".$this->order->quotes);
+        Log::channel("lead")->info("Lead : " . $this->order->quotes);
 
         // Set the "From" address and name
         return $email->from($this->from_mail->from_mail_address, $this->from_mail->from_mail_name)->subject($this->from_mail->website_name . " - New Order Received.");;
