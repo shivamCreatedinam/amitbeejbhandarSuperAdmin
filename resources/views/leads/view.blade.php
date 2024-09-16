@@ -61,13 +61,13 @@
                                     @forelse ($quotes as $key => $quote)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $quote['product_name'] }}</td>
-                                            <td>{{ $quote['brand']['brand_name'] }}</td>
-                                            <td>{{ $quote['category']['category_name'] }}</td>
-                                            <td>{{ $quote['short_desc'] }}</td>
-                                            <td>{{ $quote['total_stock'] }}</td>
+                                            <td>{{ $quote['product_name'] ?? "" }}</td>
+                                            <td>{{ $quote['brand']['brand_name'] ?? "" }}</td>
+                                            <td>{{ $quote['category']['category_name'] ?? "" }}</td>
+                                            <td>{{ $quote['short_desc'] ?? "" }}</td>
+                                            <td>{{ $quote['total_stock'] ?? "" }}</td>
                                             <td>{{ $quote['selling_price'] ?? 'N/A' }}</td>
-                                            <td>{{ $quote['quantity'] }}</td>
+                                            <td>{{ $quote['quantity'] ?? "" }}</td>
                                         </tr>
                                     @empty
                                         <tr>
