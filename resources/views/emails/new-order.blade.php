@@ -83,7 +83,7 @@
                 <p>Thank you for your order! Your order has been placed successfully.</p>
 
                 <div class="order-details">
-                    <p><strong>Order Number:</strong> {{ "#".$id }}</p>
+                    <p><strong>Order Number:</strong> {{ '#' . $id }}</p>
                     <p><strong>Order Date:</strong> {{ $order_date }}</p>
                     <p><strong>Your Email:</strong> {{ $email }}</p>
                     <p><strong>Your Mobile:</strong> {{ $mobile }}</p>
@@ -100,13 +100,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!empty($items))
+                        @if (!empty($items) && count($item) > 0)
                             @foreach ($items as $item)
                                 @if (is_array($item))
                                     <tr>
-                                        <td>{{ $item['product_name'] ?? "-" }}</td>
-                                        <td>{{ $item['brand'] ?? "-" }}</td>
-                                        <td>{{ $item['quantity'] ?? "-" }}</td>
+                                        <td>{{ $item['product_name'] ?? '-' }}</td>
+                                        <td>{{ $item['brand'] ?? '-' }}</td>
+                                        <td>{{ $item['quantity'] ?? '-' }}</td>
                                         <td>{{ $item['selling_price'] ?? 'N/A' }}</td>
                                     </tr>
                                 @else
