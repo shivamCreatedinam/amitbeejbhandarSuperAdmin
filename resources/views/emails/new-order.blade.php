@@ -105,7 +105,7 @@
                                 @if (is_array($item))
                                     <tr>
                                         <td>{{ $item->product_name ?? '-' }}</td>
-                                        <td>{{ $item->brand ?? '-' }}</td>
+                                        <td>{{ $item->brand->brand ?? '-' }}</td>
                                         <td>{{ $item->quantity ?? '-' }}</td>
                                         <td>{{ $item->selling_price ?? 'N/A' }}</td>
                                     </tr>
