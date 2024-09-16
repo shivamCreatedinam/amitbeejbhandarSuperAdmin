@@ -100,7 +100,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!empty($items) && count($item) > 0)
+                        @if (!empty($items))
                             @foreach ($items as $item)
                                 @if (is_array($item))
                                     <tr>
