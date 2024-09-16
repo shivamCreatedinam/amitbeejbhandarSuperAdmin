@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Traits\ApiResponseTrait;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class LeadController extends Controller
@@ -109,6 +110,7 @@ class LeadController extends Controller
             return $this->successResponse($lead, "Leads successfully created.");
         } catch (Exception $e) {
             DB::rollBack();
+            Log::channel("lead")->error("Lead Error : " .  $e->getMessage());
             return $this->errorResponse("Error: " . $e->getMessage());
         }
     }
