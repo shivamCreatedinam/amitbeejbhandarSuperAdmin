@@ -41,6 +41,34 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{ route('admin_brand_list') }}">
+                        <i class="fas fa-address-card"></i>
+                        <p>Brand</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin_category_list') }}">
+                        <i class="fas fa-cog"></i>
+                        <p>Category</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin_sub_category_list') }}">
+                        <i class="fas fa-cog"></i>
+                        <p>Sub Category</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('admin_product_list') }}">
+                        <i class="fas fa-cart-plus"></i>
+                        <p>Products</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#leads">
                         <i class="fas fa-users"></i>
                         <p>Leads</p>

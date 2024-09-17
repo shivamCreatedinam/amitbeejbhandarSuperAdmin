@@ -1,8 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\LeadController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +46,41 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth:web'], function () {
         Route::post('/get-order-data', [LeadController::class, "getOrder"])->name("admin_get_order");
         Route::post('/change-order-status', [LeadController::class, "changeOrderStatus"])->name("admin_change_order_status");
         Route::get('/delete-lead/{id}', [LeadController::class, "deleteLead"])->name("admin_delete_lead");
+    });
+
+    Route::group(['prefix' => 'category'], function () {
+        Route::get('/category-list', [CategoryController::class, "index"])->name("admin_category_list");
+        Route::get('/category-delete/{id}', [CategoryController::class, "delete"])->name("admin_category_delete");
+        Route::get('/add-category', [CategoryController::class, "addForm"])->name("admin_category_addform");
+        Route::post('/add-category', [CategoryController::class, "store"])->name("admin_category_store");
+
+    });
+
+    Route::group(['prefix' => 'sub-category'], function () {
+        Route::get('/list', [SubCategoryController::class, "index"])->name("admin_sub_category_list");
+        Route::get('/delete/{id}', [SubCategoryController::class, "delete"])->name("admin_sub_category_delete");
+        Route::get('/add', [SubCategoryController::class, "addForm"])->name("admin_sub_category_addform");
+        Route::post('/store-sub-category', [SubCategoryController::class, "store"])->name("admin_sub_category_store");
+
+    });
+
+
+    Route::group(['prefix' => 'product'], function () {
+        Route::get('/list', [ProductController::class, "index"])->name("admin_product_list");
+        Route::get('/delete/{id}', [ProductController::class, "delete"])->name("admin_product_delete");
+        Route::get('/add', [ProductController::class, "addForm"])->name("admin_product_addform");
+        Route::get('/get-sub-cat/{cat_id}', [ProductController::class, "getSubCat"]);
+        Route::post('/store-sub-category', [ProductController::class, "store"])->name("admin_product_store");
+
+    });
+
+
+    Route::group(['prefix' => 'brand'], function () {
+        Route::get('/brand-list', [BrandController::class, "index"])->name("admin_brand_list");
+        Route::get('/brand-delete/{id}', [BrandController::class, "delete"])->name("admin_brand_delete");
+        Route::get('/add-brand', [BrandController::class, "addForm"])->name("admin_brand_addform");
+        Route::post('/add-brand', [BrandController::class, "store"])->name("admin_brand_store");
+
     });
 
     Route::get("settings", [SettingController::class, "index"])->name("admin_setting");
