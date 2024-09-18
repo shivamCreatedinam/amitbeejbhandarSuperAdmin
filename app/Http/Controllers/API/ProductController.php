@@ -119,6 +119,8 @@ class ProductController extends Controller
             $perPage = $request->per_page_item ?? 50;  // Default to 50 items per page if not provided
             $paginatedProducts = $products->paginate($perPage);
 
+            $base_url = url('/public/storage');
+            $paginatedProducts["base_url"] =  $base_url;
             // Return success response with paginated products
             return $this->successResponse($paginatedProducts, "Products successfully fetched.");
         } catch (Exception $e) {
