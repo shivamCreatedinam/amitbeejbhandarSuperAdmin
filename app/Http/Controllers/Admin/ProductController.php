@@ -44,22 +44,6 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        // $request->validate([
-        //     "category_name" => "required|exists:categories,id",
-        //     "subcategory_name" => "required|exists:sub_categories,id",
-        //     "brand_name" => "required|exists:brands,id",
-
-        //     "product_image" => "nullable|mimes:jpeg,jpg,png,svg|max:2048",
-        //     "product_name" => "required",
-        //     "total_stock" => "required",
-        //     "mrp" => "required",
-        //     "selling_price" => "required",
-        //     "discount" => "required",
-        //     "short_desc" => "nullable",
-        //     "long_desc" => "nullable",
-        //     "features" => "nullable",
-        // ]);
-
         try {
 
             $request->validate([
@@ -69,10 +53,10 @@ class ProductController extends Controller
 
                 "product_image" => "nullable|mimes:jpeg,jpg,png,svg|max:2048",
                 "product_name" => "required",
-                "total_stock" => "required",
-                "mrp" => "required",
-                "selling_price" => "required",
-                "discount" => "required",
+                // "total_stock" => "required",
+                // "mrp" => "required",
+                // "selling_price" => "required",
+                // "discount" => "required",
                 "short_desc" => "nullable",
                 "long_desc" => "nullable",
                 "features" => "nullable",
@@ -93,10 +77,10 @@ class ProductController extends Controller
                 "brand_id" => $request->brand_name,
                 "image" => $product_image,             // Product image
                 "product_name" => $request->product_name,       // Product name
-                "total_stock" => $request->total_stock,         // Total stock
-                "mrp" => $request->mrp,                         // Maximum retail price
-                "selling_price" => $request->selling_price,     // Selling price
-                "discount" => $request->discount,               // Discount
+                // "total_stock" => $request->total_stock,         // Total stock
+                // "mrp" => $request->mrp,                         // Maximum retail price
+                // "selling_price" => $request->selling_price,     // Selling price
+                // "discount" => $request->discount,               // Discount
                 "short_desc" => $request->short_desc,           // Short description
                 "long_desc" => $request->long_desc,             // Long description
                 "features" => $request->features,               // Features
