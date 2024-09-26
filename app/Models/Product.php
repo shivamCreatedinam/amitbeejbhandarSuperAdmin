@@ -12,7 +12,7 @@ class Product extends Model
     use HasFactory;
     protected $guarded = [];
 
-    protected $with = ['category', 'subCategory', 'brand'];
+    protected $with = ['category', 'subCategory', 'brand','variants'];
 
     public function category(): BelongsTo
     {
@@ -33,4 +33,5 @@ class Product extends Model
     {
         return $this->hasMany(ProductVariant::class, 'product_id', 'id');
     }
+    
 }

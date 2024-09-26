@@ -66,13 +66,13 @@
                                 </td>
                                 <td>
                                     <a href="{{ route('admin_product_edit', ['id' => $product->id]) }}"
-                                        class="btn btn-info btn-sm">
+                                    class="btn btn-info btn-sm" style="margin-right: 10px;"> <!-- Add custom margin -->
                                         <i class="bi bi-pencil-square"></i> <!-- Edit Icon -->
                                     </a>
 
                                     <a href="{{ route('admin_product_delete', ['id' => $product->id]) }}"
-                                        onclick="return confirm('Are you sure you want to delete this product?')"
-                                        class="btn btn-danger btn-sm st-2">
+                                    onclick="return confirm('Are you sure you want to delete this product?')"
+                                    class="btn btn-danger btn-sm">
                                         <i class="bi bi-trash"></i> <!-- Delete Icon -->
                                     </a>
                                 </td>

@@ -11,10 +11,10 @@ class ProductVariant extends Model
     use HasFactory;
     protected $fillable =['product_id','variant_name','total_stock','mrp','selling_price','discount','image'];
 
-    protected $with = ['product'];
+    // protected $with = ['product'];
 
-    public function product(): BelongsTo
-    {
-        return $this->belongsTo(Product::class, 'product_id', 'id');
-    }
+    // public function product(): BelongsTo
+    // {
+    //     return $this->belongsTo(Product::class, 'product_id', 'id');
+    // }
 }
