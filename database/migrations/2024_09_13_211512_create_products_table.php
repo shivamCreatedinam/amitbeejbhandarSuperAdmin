@@ -18,10 +18,10 @@ return new class extends Migration
             $table->unsignedBigInteger("brand_id");
             $table->text("image")->nullable();
             $table->string("product_name")->nullable();
-            $table->string("total_stock")->nullable();
-            $table->double("mrp", 10, 2)->default(0.0);  // Changed to double(10,2)
-            $table->double("selling_price", 10, 2)->default(0.0);  // Changed to double(10,2)
-            $table->string("discount")->nullable();
+            // $table->string("total_stock")->nullable();
+            // $table->double("mrp", 10, 2)->default(0.0);  // Changed to double(10,2)
+            // $table->double("selling_price", 10, 2)->default(0.0);  // Changed to double(10,2)
+            // $table->string("discount")->nullable();
             $table->text("short_desc")->nullable();
             $table->longText("long_desc")->nullable();
             $table->longText("features")->nullable();

@@ -6,6 +6,7 @@ use App\Events\OrderCreateEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
 use App\Models\Setting;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponseTrait;
 use Exception;
@@ -104,6 +105,22 @@ class LeadController extends Controller
                 "pan_number" => $request->pan_number,
                 "remarks" => $request->remarks,
             ]);
+
+            // Adding best seller 
+            // Decode the quotes JSON to an array
+            $quotes = json_decode($request->quotes, true);
+
+            // Loop through each quote to update the best_seller count
+            foreach ($quotes as $quote) {
+                $productId = $quote['id']; // Get the product ID
+
+                // Check if the product exists in the products table
+                $product = Product::find($productId);
+                if ($product) {
+                    // Increment the best_seller count
+                    $product->increment('best_seller');
+                }
+            }
             $setting_mail = Setting::query()->first();
             event(new OrderCreateEvent($lead, $setting_mail));
             DB::commit();

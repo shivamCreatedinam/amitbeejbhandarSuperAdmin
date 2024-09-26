@@ -115,6 +115,9 @@ class ProductController extends Controller
                 $products->where('product_name', 'like', '%' . $request->query . '%');
             }
 
+            // Sort products by best_seller count in descending order
+            $products->orderBy('best_seller', 'desc');
+
             // Pagination: If 'per_page_item' is provided, paginate, otherwise use a default value
             $perPage = $request->per_page_item ?? 50;  // Default to 50 items per page if not provided
             $paginatedProducts = $products->paginate($perPage);
