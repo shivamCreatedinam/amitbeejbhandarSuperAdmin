@@ -44,20 +44,37 @@
                 <div class="row">
                     <!-- Uncomment if the image upload is required -->
                     <!-- 
-                        <div class="col-md-4 form-group">
-                            <label for="variant_image">Variant Image </label>
-                            <input type="file" name="variant_image" class="form-control" id="variant_image">
-                            @error('variant_image')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div> 
-                    -->
+            <div class="col-md-4 form-group">
+                <label for="variant_image">Variant Image </label>
+                <input type="file" name="variant_image" class="form-control" id="variant_image">
+                @error('variant_image')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div> 
+        -->
 
                     <div class="col-md-4 form-group">
-                        <label for="variant_name">Variant Name <span class="text-danger">*</span></label>
-                        <input type="text" name="variant_name" value="{{ old('variant_name', $variant->variant_name) }}"
-                            class="form-control" id="variant_name" placeholder="Variant Name" required>
+                        <label for="variant_name">Variant Quantity <span class="text-danger">*</span></label>
+                        <input type="number" name="variant_name"
+                            value="{{ old('variant_name', $variant->variant_name) }}" class="form-control"
+                            id="variant_name" placeholder="Variant Quantity" required>
                         @error('variant_name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                        <label for="unit">Unit <span class="text-danger">*</span></label>
+                        <select name="unit" class="form-control" id="unit" required>
+                            <option value="" disabled>Select Unit</option>
+                            <option value="ml" {{ old('unit', $variant->unit) == 'ml' ? 'selected' : '' }}>ml</option>
+                            <option value="g" {{ old('unit', $variant->unit) == 'g' ? 'selected' : '' }}>g</option>
+                            <option value="kg" {{ old('unit', $variant->unit) == 'kg' ? 'selected' : '' }}>kg</option>
+                            <option value="l" {{ old('unit', $variant->unit) == 'l' ? 'selected' : '' }}>l</option>
+                            <option value="oz" {{ old('unit', $variant->unit) == 'oz' ? 'selected' : '' }}>oz</option>
+                            <!-- Add more unit options as needed -->
+                        </select>
+                        @error('unit')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -89,19 +106,19 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+
                     <div class="col-md-4 form-group">
                         <label for="discount">Discount <span class="text-danger">*</span></label>
-                        <input type="number" name="discount"  value="{{ old('discount', $variant->discount) }}" class="form-control"
-                            id="discount" placeholder="Discount" min="0" step="0.01" required>
+                        <input type="number" name="discount" value="{{ old('discount', $variant->discount) }}"
+                            class="form-control" id="discount" placeholder="Discount" min="0" step="0.01" required>
                         @error('discount')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-
                 </div>
                 <button type="submit" class="btn btn-primary float-end">Update Variant</button>
-
             </form>
+
 
 
         </div>

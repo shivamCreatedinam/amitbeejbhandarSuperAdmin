@@ -31,7 +31,7 @@ class Product extends Model
 
     public function variants(): HasMany
     {
-        return $this->hasMany(ProductVariant::class, 'product_id', 'id');
+        return $this->hasMany(ProductVariant::class, 'product_id', 'id')->orderBy('variant_name', 'asc');
     }
     
 }

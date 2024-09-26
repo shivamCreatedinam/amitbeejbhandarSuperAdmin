@@ -82,15 +82,6 @@
                         </div>
 
                         <div class="col-md-4 form-group">
-                            <label for="product_name">Product Name <span class="text-danger">*</span></label>
-                            <input type="text" name="product_name" value="{{old('product_name')}}" class="form-control" id="product_name"
-                                placeholder="Product Name" required>
-                            @error('product_name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        
-                        <div class="col-md-4 form-group">
                             <label for="product_image">Product Image </label>
                             <input type="file" name="product_image" class="form-control" id="product_image"
                                 >
@@ -99,44 +90,51 @@
                             @enderror
                         </div>
 
-                       
+                        <div class="col-md-4 form-group">
+                            <label for="product_name">Product Name <span class="text-danger">*</span></label>
+                            <input type="text" name="product_name" value="{{old('product_name')}}" class="form-control" id="product_name"
+                                placeholder="Product Name" required>
+                            @error('product_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
 
 
-                        <!-- <div class="col-md-4 form-group">
+                        <div class="col-md-4 form-group">
                             <label for="total_stock">Total Stock <span class="text-danger">*</span></label>
                             <input type="text" name="total_stock" value="{{old('total_stock')}}" class="form-control" id="total_stock"
                                 placeholder="Total Stock" required>
                             @error('total_stock')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div> -->
+                        </div>
 
-                        <!-- <div class="col-md-4 form-group">
+                        <div class="col-md-4 form-group">
                             <label for="mrp">MRP <span class="text-danger">*</span></label>
                             <input type="text" name="mrp" value="{{old('mrp')}}" class="form-control" id="mrp"
                                 placeholder="MRP" onkeyup="this.value=this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" required>
                             @error('mrp')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div> -->
+                        </div>
 
-                        <!-- <div class="col-md-4 form-group">
+                        <div class="col-md-4 form-group">
                             <label for="selling_price">Selling Price <span class="text-danger">*</span></label>
                             <input type="text" name="selling_price" value="{{old('selling_price')}}" class="form-control" id="selling_price" onkeyup="this.value=this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')"
                                 placeholder="Selling Price" required>
                             @error('selling_price')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div> -->
+                        </div>
 
-                        <!-- <div class="col-md-4 form-group">
+                        <div class="col-md-4 form-group">
                             <label for="discount">Discount <span class="text-danger">*</span></label>
                             <input type="text" onkeyup="this.value=this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" value="{{old('discount')}}" name="discount" class="form-control" id="discount"
                                 placeholder="Discount" required>
                             @error('discount')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div> -->
+                        </div>
 
                         <div class="col-md-12 form-group">
                             <label for="short_desc">Short Desc <span class="text-danger">*</span></label>

@@ -12,16 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('product_variants', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger("product_id");
-            $table->string("variant_name");
-            $table->string("total_stock")->nullable();
-            $table->double("mrp", 10, 2)->default(0.0);  // Changed to double(10,2)
-            $table->double("selling_price", 10, 2)->default(0.0);  // Changed to double(10,2)
-            $table->string("discount")->nullable();
-            $table->string("image")->nullable();
-            $table->timestamps();
+            $table->id(); // Auto-incrementing primary key
+            $table->unsignedBigInteger('product_id'); // Foreign key to products table
+            $table->string('variant_name', 100); // Variant name (e.g., "1000ml", "500g", etc.)
+            $table->string('unit', 50); // Unit type (e.g., "ml", "g", "kg", etc.)
+            $table->integer('total_stock'); // Total stock available
+            $table->decimal('mrp', 10, 2); // Maximum retail price
+            $table->decimal('selling_price', 10, 2); // Selling price
+            $table->decimal('discount', 5, 2); // Discount percentage
+            $table->string('image', 255)->nullable(); // Optional: Image of the variant
+            $table->timestamps(); // created_at and updated_at fields
 
+            // Foreign key constraint linking variants to products
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }

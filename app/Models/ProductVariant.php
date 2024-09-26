@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ProductVariant extends Model
 {
     use HasFactory;
-    protected $fillable =['product_id','variant_name','total_stock','mrp','selling_price','discount','image'];
+    protected $fillable =['product_id','variant_name','unit','total_stock','mrp','selling_price','discount','image'];
 
     // protected $with = ['product'];
 
