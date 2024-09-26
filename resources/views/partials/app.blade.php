@@ -108,6 +108,13 @@
     <script>
         $(document).ready(function() {
 
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
             $('.dataTables_all').DataTable({
                 "processing": true,
                 "serverSide": false, // Set to true if loading data via AJAX
