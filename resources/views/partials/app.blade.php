@@ -8,6 +8,7 @@
     <link rel="icon" href="{{ asset('public/assets/img/kaiadmin/favicon.png') }}" type="image/x-icon" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.1.1/css/bootstrap5-toggle.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Fonts and icons -->
     <script src="{{ asset('public/assets/js/plugin/webfont/webfont.min.js') }}"></script>

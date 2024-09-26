@@ -107,6 +107,70 @@ class ProductController extends Controller
         }
     }
 
+    public function edit($id)
+    {
+        try {
+            $product = Product::findOrFail($id);  // Find the product or throw an exception if not found
+
+            // You can also load any related data like categories, subcategories, brands for dropdowns
+            $categories = Category::all();
+            $subCategories = SubCategory::all();
+            $brands = Brand::all();
+
+            return view('products.edit', compact('product', 'categories', 'subCategories', 'brands'));  // Return the product and other related data to the view
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            // Validate the incoming data
+            $request->validate([
+                "category_name" => "required|exists:categories,id",
+                "sub_category_name" => "required|exists:sub_categories,id",
+                "brand_name" => "required|exists:brands,id",
+                "product_image" => "nullable|mimes:jpeg,jpg,png,svg|max:2048",
+                "product_name" => "required",
+                "short_desc" => "nullable",
+                "long_desc" => "nullable",
+                "features" => "nullable",
+            ]);
+
+            $product = Product::findOrFail($id);  // Fetch the product to be updated
+
+            // Handle image update if a new file is uploaded
+            $product_image = $product->image;  // Keep the old image by default
+            $path = "product_image";
+            
+            if ($request->hasFile("product_image")) {
+                // Optionally delete the old image if a new one is uploaded
+                if ($product_image) {
+                    $this->deleteImage($product_image);  // Assuming deleteImage is a helper function
+                }
+                $product_image = $this->uploadImage($request->file('product_image'), $path);
+            }
+
+            // Update the product record with the new data
+            $product->update([
+                "category_id" => $request->category_name,
+                "sub_category_id" => $request->sub_category_name,
+                "brand_id" => $request->brand_name,
+                "image" => $product_image,               // Update image if a new one is uploaded
+                "product_name" => $request->product_name,
+                "short_desc" => $request->short_desc,
+                "long_desc" => $request->long_desc,
+                "features" => $request->features,
+            ]);
+
+            return redirect()->route('admin_product_list')->with('success', "Product Successfully Updated.");
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+
     public function delete($id)
     {
         $product = Product::find($id);

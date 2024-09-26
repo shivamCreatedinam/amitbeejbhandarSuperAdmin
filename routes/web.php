@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\LeadController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
@@ -71,8 +72,21 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth:web'], function () {
         Route::get('/add', [ProductController::class, "addForm"])->name("admin_product_addform");
         Route::get('/get-sub-cat/{cat_id}', [ProductController::class, "getSubCat"]);
         Route::post('/store-sub-category', [ProductController::class, "store"])->name("admin_product_store");
+        Route::get('/edit/{id}', [ProductController::class, "edit"])->name('admin_product_edit');
+        Route::post('/update/{id}', [ProductController::class, "update"])->name('admin_product_update');
 
     });
+
+    Route::group(['prefix' => 'variant'], function () {
+        // Display list of variants for a specific product
+        Route::get('/list/{id}', [ProductVariantController::class, 'index'])->name('product_variant_list');
+        Route::get('/add/{id}', [ProductVariantController::class, 'addForm'])->name('variant_addForm');
+        Route::post('/store/{id}', [ProductVariantController::class, 'store'])->name('variant_store');
+        Route::get('/edit/{id}', [ProductVariantController::class, 'editForm'])->name('variant_editForm');
+        Route::post('/update/{id}', [ProductVariantController::class, 'update'])->name('variant_update');   
+        Route::get('/delete/{id}', [ProductVariantController::class, 'destroy'])->name('variant_delete');
+    });
+    
 
 
     Route::group(['prefix' => 'brand'], function () {
