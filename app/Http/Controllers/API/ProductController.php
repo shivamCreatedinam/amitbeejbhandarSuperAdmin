@@ -110,10 +110,13 @@ class ProductController extends Controller
                 $products->where('sub_category_id', $request->sub_category_id);
             }
 
-            // Search for the product by product name if 'query' is provided
             if ($request->filled('query')) {
-                $products->where('product_name', 'like', '%' . $request->query . '%');
+                $query = trim($request['query']);
+                $products->where('product_name', 'like', '%' . $query . '%')
+                        ->orWhere('technical_name', 'like', '%' . $query . '%')
+                        ->orWhere('short_desc', 'like', '%' . $query . '%');
             }
+            
 
             // Sort products by best_seller count in descending order
             $products->orderBy('best_seller', 'desc');
@@ -124,6 +127,7 @@ class ProductController extends Controller
 
             $base_url = url('/public/storage');
             $paginatedProducts["base_url"] =  $base_url;
+            
             // Return success response with paginated products
             return $this->successResponse($paginatedProducts, "Products successfully fetched.");
         } catch (Exception $e) {

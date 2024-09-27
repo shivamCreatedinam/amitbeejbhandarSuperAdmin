@@ -54,7 +54,7 @@
                         <tbody>
                         @foreach ($variants as $key=>$variant )
                         <tr>
-                            <td>{{$key++}}</td>
+                            <td>{{$key+1}}</td>
                             <td>{{$variant->variant_name}}&nbsp; {{$variant->unit}}</td>
                             <td>{{$variant->total_stock}}</td>
                             <td>{{$variant->mrp}}</td>

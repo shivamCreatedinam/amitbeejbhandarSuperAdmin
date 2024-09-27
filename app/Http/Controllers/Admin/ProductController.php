@@ -53,6 +53,7 @@ class ProductController extends Controller
 
                 "product_image" => "nullable|mimes:jpeg,jpg,png,svg|max:2048",
                 "product_name" => "required",
+                "technical_name"=>"required",
                 // "total_stock" => "required",
                 // "mrp" => "required",
                 // "selling_price" => "required",
@@ -77,6 +78,7 @@ class ProductController extends Controller
                 "brand_id" => $request->brand_name,
                 "image" => $product_image,             // Product image
                 "product_name" => $request->product_name,       // Product name
+                "technical_name" => $request->technical_name, 
                 // "total_stock" => $request->total_stock,         // Total stock
                 // "mrp" => $request->mrp,                         // Maximum retail price
                 // "selling_price" => $request->selling_price,     // Selling price
@@ -117,6 +119,7 @@ class ProductController extends Controller
                 "brand_name" => "required|exists:brands,id",
                 "product_image" => "nullable|mimes:jpeg,jpg,png,svg|max:2048",
                 "product_name" => "required",
+                "technical_name"=>"required",
                 "short_desc" => "nullable",
                 "long_desc" => "nullable",
                 "features" => "nullable",
@@ -143,6 +146,7 @@ class ProductController extends Controller
                 "brand_id" => $request->brand_name,
                 "image" => $product_image,               // Update image if a new one is uploaded
                 "product_name" => $request->product_name,
+                "technical_name" => $request->technical_name,     
                 "short_desc" => $request->short_desc,
                 "long_desc" => $request->long_desc,
                 "features" => $request->features,

@@ -101,8 +101,14 @@
                         @endif
                     </div>
 
-
-                    <div class="col-md-12 form-group">
+                    <div class="col-md-6 form-group">
+                        <label for="technical_name">Technical Name <span class="text-danger">*</span></label>
+                        <input type="text" name="technical_name" value="{{ $product->technical_name }}" class="form-control" id="technical_name" placeholder="Technical Name" required>
+                        @error('technical_name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-md-6 form-group">
                         <label for="short_desc">Short Desc <span class="text-danger">*</span></label>
                         <input type="text" name="short_desc" value="{{ $product->short_desc }}" class="form-control" id="short_desc" placeholder="Short Desc" required>
                         @error('short_desc')

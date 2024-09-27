@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
+            $table->text('technical_name')->nullable()->after('product_name');
             $table->unsignedInteger('best_seller')->default(0)->after('features');
         });
     }
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            //
+            $table->dropColumn('technical_name');
+            $table->dropColumn('best_seller');
         });
     }
 };
