@@ -51,24 +51,26 @@
                                         <th>Product Name</th>
                                         <th>Brand</th>
                                         <th>Category</th>
-                                        <th>Technical Content</th>
-                                        <th>Size</th>
+                                        <!-- <th>Technical Content</th> -->
+                                        <th>Variant Name</th>
+                                        <!-- <th>Size</th> -->
+                                        <th>Stock</th>
                                         <th>Price</th>
                                         <th>Quantity</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($quotes as $key => $quote)
-                                        <tr>
-                                            <td>{{ $key + 1 }}</td>
-                                            <td>{{ $quote['product_name'] ?? "" }}</td>
-                                            <td>{{ $quote['brand']['brand_name'] ?? "" }}</td>
-                                            <td>{{ $quote['category']['category_name'] ?? "" }}</td>
-                                            <td>{{ $quote['short_desc'] ?? "" }}</td>
-                                            <td>{{ $quote['total_stock'] ?? "" }}</td>
-                                            <td>{{ $quote['selling_price'] ?? 'N/A' }}</td>
-                                            <td>{{ $quote['quantity'] ?? "" }}</td>
-                                        </tr>
+                                    <tr>
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $quote['product_name'] ?? '' }}</td>
+                                        <td>{{ $quote['brand']['brand_name'] ?? '' }}</td>
+                                        <td>{{ $quote['category'] ?? 'N/A' }}</td>
+                                        <td>{{ $quote['variantName'] ?? 'N/A' }}</td>
+                                        <td>{{ $quote['stock'] ?? '-' }}</td>
+                                        <td>{{ $quote['price'] ?? 'N/A' }}</td>
+                                        <td>{{ $quote['quantity'] ?? '-' }}</td>
+                                    </tr>
                                     @empty
                                         <tr>
                                             <td colspan="8">No quotes available.</td>
