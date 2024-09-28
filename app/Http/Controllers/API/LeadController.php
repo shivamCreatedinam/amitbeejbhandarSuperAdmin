@@ -107,20 +107,30 @@ class LeadController extends Controller
             ]);
 
             // Adding best seller 
-            // Decode the quotes JSON to an array
-            $quotes = json_decode($request->quotes, true);
+            $quotes = $request->quotes ? json_decode($request->quotes, true) : [];
 
+            // Check if decoding was successful
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                 return $this->errorResponse("Invalid quotes JSON format: " . json_last_error_msg());
+            }
+ 
+            // Ensure quotes is an array
+            if (!is_array($quotes)) {
+                 return $this->errorResponse("Quotes must be an array.");
+            }
+ 
             // Loop through each quote to update the best_seller count
             foreach ($quotes as $quote) {
-                $productId = $quote['id']; // Get the product ID
-
-                // Check if the product exists in the products table
-                $product = Product::find($productId);
-                if ($product) {
-                    // Increment the best_seller count
-                    $product->increment('best_seller');
-                }
+                 $productId = $quote['id']; // Get the product ID
+ 
+                 // Check if the product exists in the products table
+                 $product = Product::find($productId);
+                 if ($product) {
+                     // Increment the best_seller count
+                     $product->increment('best_seller');
+                 }
             }
+
             $setting_mail = Setting::query()->first();
             event(new OrderCreateEvent($lead, $setting_mail));
             DB::commit();
