@@ -29,7 +29,8 @@
     <div class="card mx-4">
         <div class="card-header">
             @include('status')
-            <h5>Products</h5>
+            <h5>Products <span style="color:red;">(Must add variant in each and every product!)</span>
+            </h5>
             <div class="text-end">
                 <a href="{{ route('admin_product_addform') }}" class="btn btn-primary btn-sm">Add New Product</a>
             </div>
@@ -60,9 +61,16 @@
                                 <td>{{ $product->subCategory->subcategory_name }}</td>
                                 <td>{{ $product->brand->brand_name }}</td>
                                 <td>{{ $product->product_name }}</td>
+                              
                                 <td>
+                                @if ($product->variants->count() > 0)
                                     <a href="{{ route('product_variant_list', ['id' => $product->id]) }}"
-                                        class="btn btn-info btn-sm">Variant</a>
+                                    class="btn btn-success btn-sm">Variant <i class="bi bi-list"></i></a>
+                                @else
+                                    <a href="{{ route('product_variant_list', ['id' => $product->id]) }}"
+                                    class="btn btn-danger btn-sm">Variant <i class="bi bi-plus"></i></a>
+                                @endif
+                                    
                                 </td>
                                 <td>
                                     <a href="{{ route('admin_product_edit', ['id' => $product->id]) }}"
