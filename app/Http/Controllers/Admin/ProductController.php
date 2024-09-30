@@ -72,7 +72,7 @@ class ProductController extends Controller
                 $product_image = $this->uploadImage($request->file('product_image'), $path);
             }
 
-            Product::create([
+           $product =  Product::create([
                 "category_id" => $request->category_name,
                 "sub_category_id" => $request->sub_category_name,
                 "brand_id" => $request->brand_name,
@@ -87,7 +87,9 @@ class ProductController extends Controller
                 "long_desc" => $request->long_desc,             // Long description
                 "features" => $request->features,               // Features
             ]);
-            return redirect()->route('admin_product_list')->with('success', "Product Successfully Added.");
+            // return redirect()->route('admin_product_list')->with('success', "Product Successfully Added.");
+
+            return redirect()->route('variant_addForm',$product->id)->with('success', "Product Successfully Added.");
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

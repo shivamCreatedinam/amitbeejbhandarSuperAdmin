@@ -30,6 +30,7 @@
             <div class="card-header">
                 @include('status')
                 <h5>Add New Product</h5>
+                <span style="color:red;">(Please add variant after adding products)</span>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin_product_store') }}" method="post" enctype="multipart/form-data">

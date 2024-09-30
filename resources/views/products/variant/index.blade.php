@@ -15,7 +15,7 @@
                         <i class="icon-arrow-right"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Products</a>
+                        <a href="{{route('admin_product_list')}}">Products</a>
                     </li>
                     <li class="separator">
                         <i class="icon-arrow-right"></i>
