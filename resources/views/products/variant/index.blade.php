@@ -44,6 +44,7 @@
                                 <th>#</th>
                                 <!-- <th>Image</th> -->
                                 <th>Variant Name</th>
+                                <th>Quantity</th>
                                 <th>Stock</th>
                                 <th>MRP</th>
                                 <th>Selling Price</th>
@@ -55,17 +56,18 @@
                         @foreach ($variants as $key=>$variant )
                         <tr>
                             <td>{{$key+1}}</td>
-                            <td>{{$variant->variant_name}}&nbsp; {{$variant->unit}}</td>
+                            <td>{{$variant->variant_name}}</td>
+                            <td>{{$variant->quantity}}</td>
                             <td>{{$variant->total_stock}}</td>
                             <td>{{$variant->mrp}}</td>
                             <td>{{$variant->selling_price}}</td>
                             <td>{{$variant->discount}}</td>
                            <td>
                            <a href="{{ route('variant_editForm', ['id' => $variant->id]) }}"
-                                            class="btn btn-primary btn-sm">Edit</a>
+                                            class="btn btn-primary btn-sm">  <i class="bi bi-pencil-square"></i> </a>
                            <a href="{{ route('variant_delete', ['id' => $variant->id]) }}"
                                             onclick="return confirm('Are you sure delete this variant.')"
-                                            class="btn btn-danger btn-sm">Delete</a>
+                                            class="btn btn-danger btn-sm"> <i class="bi bi-trash"></i></a>
                            </td>
 
                         </tr>

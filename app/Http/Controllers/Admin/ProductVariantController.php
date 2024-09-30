@@ -26,7 +26,7 @@ class ProductVariantController extends Controller
         try {
             // Validate incoming request data
             $request->validate([
-                "variant_name" => "required|integer|min:1",   // Quantity should be an integer (e.g., "1", "10")
+                "variant_name" => "required|string",   // Quantity should be an integer (e.g., "1", "10")
                 "unit" => "required|string|max:50",           // Unit is required (ml, g, kg, etc.)
                 "variant_image" => "nullable|mimes:jpeg,jpg,png,svg|max:2048",  // Optional image with validation
                 "total_stock" => "required|integer|min:0",    // Total stock must be a non-negative integer
@@ -46,6 +46,8 @@ class ProductVariantController extends Controller
             ProductVariant::create([
                 "product_id" => $id,                           // Foreign key to the product
                 "variant_name" => $request->variant_name,      // Quantity (e.g., "1", "10")
+                "quantity" => $request->quantity,     
+                "packing" => $request->packing,                  
                 "unit" => $request->unit,                      // Unit type (e.g., "ml", "kg")
                 "image" => $variant_image,                     // Product image (if any)
                 "total_stock" => $request->total_stock,        // Total stock
@@ -80,7 +82,7 @@ class ProductVariantController extends Controller
         try {
             // Validate incoming request data
             $request->validate([
-                "variant_name" => "required|integer|min:1|unique:product_variants,variant_name," . $id, // Quantity as integer
+                "variant_name" => "required|string", // Quantity as integer
                 "unit" => "required|string|max:50", // Unit type is required
                 "variant_image" => "nullable|mimes:jpeg,jpg,png,svg|max:2048", // Optional image with validation
                 "total_stock" => "required|integer|min:0", // Total stock must be a non-negative integer
@@ -108,6 +110,8 @@ class ProductVariantController extends Controller
             // Update the variant record with the new data
             $variant->update([
                 "variant_name" => $request->variant_name, // Updated quantity
+                "quantity" => $request->quantity,     
+                "packing" => $request->packing, 
                 "unit" => $request->unit, // Updated unit
                 "image" => $variant_image, // Updated image if there's a new one
                 "total_stock" => $request->total_stock, // Updated total stock

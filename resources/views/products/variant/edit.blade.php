@@ -44,21 +44,30 @@
                 <div class="row">
                     <!-- Uncomment if the image upload is required -->
                     <!-- 
-            <div class="col-md-4 form-group">
-                <label for="variant_image">Variant Image </label>
-                <input type="file" name="variant_image" class="form-control" id="variant_image">
-                @error('variant_image')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div> 
-        -->
+                        <div class="col-md-4 form-group">
+                            <label for="variant_image">Variant Image </label>
+                            <input type="file" name="variant_image" class="form-control" id="variant_image">
+                            @error('variant_image')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div> 
+                    -->
 
                     <div class="col-md-4 form-group">
-                        <label for="variant_name">Variant Quantity <span class="text-danger">*</span></label>
-                        <input type="number" name="variant_name"
-                            value="{{ old('variant_name', $variant->variant_name) }}" class="form-control"
-                            id="variant_name" placeholder="Variant Quantity" required>
+                        <label for="variant_name">Varient Name(Size) <span class="text-danger">*</span></label>
+                        <input type="text" name="variant_name" value="{{ old('variant_name', $variant->variant_name) }}" class="form-control"
+                            id="variant_name" placeholder="Enter size (e.g., 12KG(PACK OF 12*1KG))" required>
                         @error('variant_name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                        <label for="quantity">Quantity <span class="text-danger">*</span></label>
+                        <input type="number" name="quantity"
+                            value="{{ old('quantity', $variant->quantity) }}" class="form-control"
+                            id="quantity" placeholder="Variant Quantity" required>
+                        @error('quantity')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -75,6 +84,15 @@
                             <!-- Add more unit options as needed -->
                         </select>
                         @error('unit')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-4 form-group">
+                        <label for="packing">Packing <span class="text-danger">*</span></label>
+                        <input type="number" name="packing" value="{{ old('packing', $variant->packing) }}" class="form-control"
+                            id="packing" placeholder="Enter Quantity (e.g., 1, 10)" min="0"  required>
+                        @error('packing')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>

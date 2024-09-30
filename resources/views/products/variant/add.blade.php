@@ -51,16 +51,24 @@
                         @enderror
                     </div> 
                 -->
-
                 <div class="col-md-4 form-group">
-                    <label for="variant_name">Quantity <span class="text-danger">*</span></label>
-                    <input type="number" name="variant_name" value="{{ old('variant_name') }}" class="form-control"
-                        id="variant_name" placeholder="Enter Quantity (e.g., 1, 10)" min="0" required>
+                    <label for="size">Varient Name(Size)<span class="text-danger">*</span></label>
+                    <input type="text" name="variant_name" value="{{ old('variant_name') }}" class="form-control"
+                        id="variant_name" placeholder="Enter size (e.g., 12KG(PACK OF 12*1KG))" required>
                     @error('variant_name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
 
+                <div class="col-md-4 form-group">
+                    <label for="quantity">Quantity <span class="text-danger">*</span></label>
+                    <input type="number" name="quantity" value="{{ old('quantity') }}" class="form-control"
+                        id="quantity" placeholder="Enter Quantity (e.g., 1, 10)" min="0" required>
+                    @error('quantity')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+         
                 <div class="col-md-4 form-group">
                     <label for="unit">Unit <span class="text-danger">*</span></label>
                     <select name="unit" class="form-control" id="unit" required>
@@ -74,6 +82,16 @@
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+
+                <div class="col-md-4 form-group">
+                    <label for="packing">Packing <span class="text-danger">*</span></label>
+                    <input type="number" name="packing" value="{{ old('packing') }}" class="form-control"
+                        id="packing" placeholder="Enter Quantity (e.g., 1, 10)" min="0"  required>
+                    @error('packing')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
 
                 <div class="col-md-4 form-group">
                     <label for="total_stock">Total Stock <span class="text-danger">*</span></label>
