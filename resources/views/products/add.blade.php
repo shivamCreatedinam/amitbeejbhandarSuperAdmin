@@ -184,7 +184,9 @@
         $(document).ready(function() {
             $("#category_name").on("change", function() {
                 let cat_id = $(this).val();
-                let url = `{{url('/admin/product/get-sub-cat')}}/${cat_id}`
+                let url = `{{url('/product/get-sub-cat')}}/${cat_id}`
+                // let url = `{{url('/admin/product/get-sub-cat')}}/${cat_id}`
+
 
                 $.ajax({
                     type: "get",
