@@ -59,6 +59,13 @@ class ProductController extends Controller
  *                     description="Number of items per page for pagination",
  *                     example=10,
  *                     nullable=true
+ *                 ),
+ *                   @OA\Property(
+ *                     property="page_no",
+ *                     type="integer",
+ *                     description="Number of Page.",
+ *                     example=10,
+ *                     nullable=true
  *                 )
  *             )
  *         )
@@ -77,6 +84,7 @@ class ProductController extends Controller
  *     )
  * )
  */
+
     public function getProduct(Request $request)
     {
         // Validate the request inputs
@@ -86,6 +94,7 @@ class ProductController extends Controller
             'sub_category_id' => 'nullable|numeric',
             'query' => 'nullable|string',  // Search query for product name
             'per_page_item' => 'nullable|numeric',  // Number of items per page
+            'page_no' => 'nullable|numeric',  // Page number
         ]);
 
         // If validation fails, return an error response
@@ -116,23 +125,48 @@ class ProductController extends Controller
                         ->orWhere('technical_name', 'like', '%' . $query . '%')
                         ->orWhere('short_desc', 'like', '%' . $query . '%');
             }
-            
 
             // Sort products by best_seller count in descending order
             $products->orderBy('best_seller', 'desc');
 
-            // Pagination: If 'per_page_item' is provided, paginate, otherwise use a default value
-            $perPage = $request->per_page_item ?? 50;  // Default to 50 items per page if not provided
-            $paginatedProducts = $products->paginate($perPage);
+            // Check if 'per_page_item' is provided
+            if ($request->filled('per_page_item') && $request->per_page_item > 0) {
+                // Use pagination if 'per_page_item' is provided
+                $perPage = (int) $request->per_page_item;  // Get the per_page_item as integer
+                $paginatedProducts = $products->paginate($perPage);
+                $currentPage = $paginatedProducts->currentPage();
+                $total = $paginatedProducts->total();
+            } else {
+                // If 'per_page_item' is not provided or is zero, fetch all products
+                $paginatedProducts = $products->get();
+                $currentPage = 1;  // Set current page to 1 for non-paginated response
+                $total = $paginatedProducts->count();  // Total number of products
+            }
 
             $base_url = url('/public/storage');
-            $paginatedProducts["base_url"] =  $base_url;
-            
-            // Return success response with paginated products
-            return $this->successResponse($paginatedProducts, "Products successfully fetched.");
+
+            // Prepare response data
+            $response = [
+                'data' => [
+                    'data' => $paginatedProducts,  // Get items from paginated result or all items
+                    'total' => $total,  // Total number of products
+                    'current_page' => $currentPage,
+                    'per_page' => $request->per_page_item ?? $total, // Default to total items if no pagination
+                    'last_page' => $request->filled('per_page_item') ? $paginatedProducts->lastPage() : 1, // Last page number
+                    'next_page_url' => $request->filled('per_page_item') ? $paginatedProducts->nextPageUrl() : null,
+                    'prev_page_url' => $request->filled('per_page_item') ? $paginatedProducts->previousPageUrl() : null,
+                ],
+                'base_url' => $base_url,
+                'per_page_item' => $request->per_page_item ?? null,  // Include per_page_item in response
+                'page' => $request->page_no ?? 1,  // Include page number, default to 1 if not provided
+            ];
+
+            // Return success response with paginated products or all products
+            return $this->successResponse($response, "Products successfully fetched.");
         } catch (Exception $e) {
             // Return error response if an exception occurs
             return $this->errorResponse("Error: " . $e->getMessage());
         }
     }
+
 }
