@@ -12,7 +12,7 @@ return [
                 /*
                  * Route for accessing api documentation interface
                 */
-                'api' => 'api/documentation',
+                'api' => 'admin/api/documentation',
             ],
             'paths' => [
                 /*
@@ -41,6 +41,7 @@ return [
                 'annotations' => [
                     base_path('app'),
                 ],
+                'base' => '/admin/api/v1',
 
             ],
         ],
