@@ -96,77 +96,78 @@ class ProductController extends Controller
             'per_page_item' => 'nullable|numeric',  // Number of items per page
             'page_no' => 'nullable|numeric',  // Page number
         ]);
-
+    
         // If validation fails, return an error response
         if ($validator->fails()) {
             return $this->validationErrorResponse($validator->errors()->first());
         }
-
+    
         try {
             // Build the product query
             $products = Product::query();
-
+    
             // Apply filters if the values are provided and not zero
             if ($request->filled('brand_id') && $request->brand_id != 0) {
                 $products->where('brand_id', $request->brand_id);
             }
-
+    
             if ($request->filled('category_id') && $request->category_id != 0) {
                 $products->where('category_id', $request->category_id);
             }
-
+    
             if ($request->filled('sub_category_id') && $request->sub_category_id != 0) {
                 $products->where('sub_category_id', $request->sub_category_id);
             }
-
+    
             if ($request->filled('query')) {
                 $query = trim($request['query']);
-                $products->where('product_name', 'like', '%' . $query . '%')
-                        ->orWhere('technical_name', 'like', '%' . $query . '%')
-                        ->orWhere('short_desc', 'like', '%' . $query . '%');
+                $products->where(function($q) use ($query) {
+                    $q->where('product_name', 'like', '%' . $query . '%')
+                    ->orWhere('technical_name', 'like', '%' . $query . '%')
+                    ->orWhere('short_desc', 'like', '%' . $query . '%');
+                });
             }
-
+    
             // Sort products by best_seller count in descending order
             $products->orderBy('best_seller', 'desc');
-
-            // Check if 'per_page_item' is provided
-            if ($request->filled('per_page_item') && $request->per_page_item > 0) {
-                // Use pagination if 'per_page_item' is provided
-                $perPage = (int) $request->per_page_item;  // Get the per_page_item as integer
-                $paginatedProducts = $products->paginate($perPage);
-                $currentPage = $paginatedProducts->currentPage();
-                $total = $paginatedProducts->total();
-            } else {
-                // If 'per_page_item' is not provided or is zero, fetch all products
-                $paginatedProducts = $products->get();
-                $currentPage = 1;  // Set current page to 1 for non-paginated response
-                $total = $paginatedProducts->count();  // Total number of products
-            }
-
+    
+            // Get the per_page_item and page_no, set defaults if not provided
+            $perPage = $request->input('per_page_item', 10);  // Default items per page to 10
+            $pageNo = $request->input('page_no', 1);  // Default page to 1
+    
+            // Set the current page manually
+            \Illuminate\Pagination\Paginator::currentPageResolver(function () use ($pageNo) {
+                return $pageNo;
+            });
+    
+            // Use pagination
+            $paginatedProducts = $products->paginate($perPage);
+            
             $base_url = url('/public/storage');
-
+    
             // Prepare response data
             $response = [
                 'data' => [
-                    'data' => $paginatedProducts,  // Get items from paginated result or all items
-                    'total' => $total,  // Total number of products
-                    'current_page' => $currentPage,
-                    'per_page' => $request->per_page_item ?? $total, // Default to total items if no pagination
-                    'last_page' => $request->filled('per_page_item') ? $paginatedProducts->lastPage() : 1, // Last page number
-                    'next_page_url' => $request->filled('per_page_item') ? $paginatedProducts->nextPageUrl() : null,
-                    'prev_page_url' => $request->filled('per_page_item') ? $paginatedProducts->previousPageUrl() : null,
+                    'data' => $paginatedProducts->items(),
+                    'total' => $paginatedProducts->total(),
+                    'current_page' => $paginatedProducts->currentPage(),
+                    'per_page' => $paginatedProducts->perPage(),
+                    'last_page' => $paginatedProducts->lastPage(),
+                    'next_page_url' => $paginatedProducts->nextPageUrl(),
+                    'prev_page_url' => $paginatedProducts->previousPageUrl(),
                 ],
                 'base_url' => $base_url,
-                'per_page_item' => $request->per_page_item ?? null,  // Include per_page_item in response
-                'page' => $request->page_no ?? 1,  // Include page number, default to 1 if not provided
+                'per_page_item' => $perPage,
+                'page' => $pageNo,
             ];
-
-            // Return success response with paginated products or all products
+    
+            // Return success response with paginated products
             return $this->successResponse($response, "Products successfully fetched.");
         } catch (Exception $e) {
             // Return error response if an exception occurs
             return $this->errorResponse("Error: " . $e->getMessage());
         }
     }
+ 
 
 }
